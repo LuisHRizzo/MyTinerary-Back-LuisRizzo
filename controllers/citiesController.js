@@ -1,28 +1,45 @@
 import City from '../models/City.js'
 
 const citiesController={
+    // get all 
     getAllCities: async (req, res, next)=>{
-        const cities = await City.find({})
+        try{ 
+        const cities = await City.find()
         res.json({   
             cities,         
             success:true,
             error:null
         })
+    } catch(error){console.log(error)}
     }, 
+    //get one 
     getOneCity: async (req, res,next)=>{
-        const cities = await City.find(cities => cities.name == name)
-        const { name } = req.params
-        res.json({
-            cities,
+        const id = req.params.id
+        try{
+        const city = await City.findById(id)
+            res.json({
+            city,
             success:true,
             error:null
         })
+        }catch(error){console.log(error)}
     }, 
-    createOneCity:(req, res,next)=>{
-        const newCity = new City()
-        
+    //create 
+    createOneCity:async (req, res,next)=>{      
         try{
-            City.create(req.body)
+            const {
+                name,
+                image,
+                description,
+                coin
+            } = req.body;
+            const city = new City({name, image, description,coin});
+            await city.save();
+            res.json({
+                city,
+                success:true,
+                error:null
+            })
         }catch(error){
             console.log(error) 
         }
@@ -31,8 +48,42 @@ const citiesController={
             success:true,
             error:null
         }) 
+    },
+    // update 
+    updateOneCity:async (req, res,next)=>{   
+        const {id} =req.params
+        try{
+            let city = await City.findOneAndUpdate({_id: id}, req.body, {new:true} ) 
+            res.json({   
+                city,         
+                success:true,
+                error:null
+            })
+        }catch(error){
+            console.log(error) 
+        }
+        
+        
+
+    },
+
+    // delete 
+    deleteOneCity:async (req, res,next)=>{   
+        const {id} =req.params
+        try{
+            let city = await City.findOneAndDelete({_id: id}, {new:true} ) 
+            res.json({   
+                city,         
+                success:true,
+                error:null
+            })
+        }catch(error){
+            console.log(error) 
+        }      
+
     }
-     
+      
 }
+
 
 export default citiesController

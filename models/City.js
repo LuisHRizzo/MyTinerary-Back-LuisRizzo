@@ -1,14 +1,12 @@
 import { Schema, model, Types } from "mongoose";
 
-let collection = 'cities';
-
-let schema = new Schema({
+const citiesSchema = Schema({
     name:{type: 'string', required: true},
     image:{type: 'string', required: true},
     description:{type: 'string', required: false},
     coin:{type: 'string', required: false},
 })
 
-let City = model(collection, schema)
+let City = model('cities', citiesSchema)
 
 export default City
