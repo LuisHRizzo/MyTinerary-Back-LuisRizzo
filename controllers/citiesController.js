@@ -30,10 +30,11 @@ const citiesController={
             const {
                 name,
                 image,
+                country,
                 description,
                 coin
             } = req.body;
-            const city = new City({name, image, description,coin});
+            const city = new City({name, image, country, description, coin});
             await city.save();
             res.json({
                 city,

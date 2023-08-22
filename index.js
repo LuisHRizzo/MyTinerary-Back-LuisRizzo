@@ -15,5 +15,5 @@ server.get('/', (req, res, next)=>{
     res.send('Bienvenidos a Mytinerary')
 })
 
-server.listen(PORT, ()=>{console.log("Servidor corriendo en puerto",PORT )})
+server.listen(PORT, ()=>{console.log("Servidor corriendo en el puerto",PORT )})
 
