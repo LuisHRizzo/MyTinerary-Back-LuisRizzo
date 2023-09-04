@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const infosSchema = Schema({
     itinerary:{type: mongoose.Types.ObjectId, ref: 'Itinerary'},
     likes:{type: 'number', default: 0},
-    comments:{type: 'string', default: ''},
+    activities:[{type: 'string', default: ''}],
 })
 
 let Info = model('infos', infosSchema)

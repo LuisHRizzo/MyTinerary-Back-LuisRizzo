@@ -25,16 +25,29 @@ const itinerariesController={
         })
         }catch(error){console.log(error)}
     }, 
+    // get itineraries by city
+    getItineraryByCity: async (req, res,next)=>{
+        const id = req.params.id
+        try{
+        const itinerary = await City.findById(id).populate('itineraries')
+            res.json({
+            itinerary,
+            success:true,
+            error:null
+        })
+        }catch(error){console.log(error)}
+    }, 
     //create 
     createOneItinerary:async (req, res,next)=>{      
         try{
             if(req.body.city){
-                let cityQuery = {city : {$regex : req.body.city.trim(), $options : 'i'}}            
+                let cityQuery = {name : {$regex : req.body.city.trim(), $options : 'i'}}            
                 const city = await City.findOne(cityQuery)
-                if( city) {
+                if(city) {
                     let aux = {...req.body}
                     aux.city = city._id
                     const newItinerary = await Itinerary.create(aux)
+                    await City.findOneAndUpdate({ _id: city._id }, { $push: { itineraries: newItinerary._id }})
                     res.json({
                         response: newItinerary,
                         success:true,

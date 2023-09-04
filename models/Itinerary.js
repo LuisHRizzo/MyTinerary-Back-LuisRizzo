@@ -7,11 +7,12 @@ const itinerariesSchema = Schema({
     photo:{type: 'string', required: true},
     duration:{type: 'number', required: true},
     price:{type: 'number', required: true},
-    hashtags:{type: 'Array', required: false},
+    hashtags:{type:'array', required: false},
     city:{type: mongoose.Types.ObjectId, ref: 'City', required: true},
+    comments:{type: 'string', required: false},
     info:[{type: mongoose.Types.ObjectId, ref: 'Info'}],
 })
 
-let Itinerary = model('itineraries', itinerariesSchema)
+let Itinerary = model('Itinerary', itinerariesSchema)
 
 export default Itinerary

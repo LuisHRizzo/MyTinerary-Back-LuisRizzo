@@ -1,4 +1,6 @@
 import City from '../models/City.js'
+import Itinerary from '../models/Itinerary.js'
+
 
 const citiesController={
     // get all 
@@ -16,13 +18,14 @@ const citiesController={
     getOneCity: async (req, res,next)=>{
         const id = req.params.id
         try{
-        const city = await City.findById(id)
+        const city = await City.findById(id).populate('itineraries')
             res.json({
             city,
             success:true,
             error:null
         })
-        }catch(error){console.log(error)}
+        }catch(error){console.log(error)
+        }
     }, 
     //create 
     createOneCity:async (req, res,next)=>{      
